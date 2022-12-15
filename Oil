@@ -1,0 +1,31 @@
+#cargamos las ibrerias que vamos a usar
+library(xts)
+library(astsa)
+library(readxl)
+
+#cargamos los datos que vamos a usar
+Petroleo <- read_excel("Petroleo.xlsx", col_types = c("date", 
+                                                      "numeric"))
+myxts <-  xts(Petroleo$Price, Petroleo$Date)
+
+#creamos un set de entrenamiento y un set de test
+data_test <- tail(myxts, n=30)
+petroleo_train <- head(Petroleo, n = -30)
+data_train <- xts(petroleo_train$Price, petroleo_train$Date )
+
+#hacemos el gráfico para ver como es la función
+
+title("Datos entrenamiento Petroleo")
+
+#Miramos las funciones de autocorrelacion
+acf2(diff(myxts))
+
+#Diseñamos el modelo obtenido
+modelo_petroleo <-  sarima(data_train, 1,1,1)
+
+#Analizamos el modelo
+modelo_petrole$ttable
+
+#Realizamos las predicciones
+sarima.for(x, n.head =30, p=1, d=1, q =1)
+lines(data_test)
